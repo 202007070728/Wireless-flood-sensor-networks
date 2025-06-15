@@ -8,6 +8,7 @@
 # 1 Summary of supplemental materials
 This table below shows all supplemental materials. All sheets in Tables S1, S2, and S3 are arranged in the order shown in this table.
 
+![image](https://github.com/user-attachments/assets/e84d3454-35a0-41a5-93a4-c75420f48de7)
 
 # 2 General Introduction
 
@@ -25,8 +26,8 @@ The data transformation from BIM’s IFC format to Winprop’s IDA format aims t
 
 This library includes 18 functions to ensure the transformation of object attributes from IFC  to their counterparts in IDA.
 
+![image](https://github.com/user-attachments/assets/00bd878c-e6b5-462a-b24e-26d443af152b)
 
-![image](Image/IFC2IDF.png)
 ↑↑↑Codes for IFC2IDF function library
 
 ## 3.2 Development for SCM to optimize WANs
@@ -34,6 +35,7 @@ This library includes 18 functions to ensure the transformation of object attrib
 The dataset formulation consists of generating WPSs with the grid method and obtaining the energy consumption and natural lighting performance of corresponding WPSs.
 
 This step involves designing the material library, mapping schema between IFC and IDA, and setting the key parameters of the SCM simulation
+![image](https://github.com/user-attachments/assets/000d4379-2f26-4f63-831f-ba1e9eed212f)
 
 
 ## 3.3 Optimization Results
