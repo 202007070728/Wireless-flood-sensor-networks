@@ -42,6 +42,7 @@ This step involves designing the material library, mapping schema between IFC an
 
 3.3.1 Optimize WAN placements considering FDNs by GA
 An algorithm based on GA has been devised for WAN placements optimization. The GA-based WAN considering FDNs optimization algorithm is structured into 10 steps. The coordinates of the WAN’s placements are skillfully transformed into a six-gene chromosome to represent a WAN node.
+![image](https://github.com/user-attachments/assets/6e7137ef-af9b-4cd5-ad23-e67e876892d6)
 
 ↑↑↑Codes for NSGA-II-based WPS optimization algorithm
 
@@ -50,3 +51,4 @@ An algorithm based on GA has been devised for WAN placements optimization. The G
 **Expert-based Approaches**: Huawei (SEbM1), Akuvox (SEbM2), Siemens (SEbM3)
 **Numerical Optimization Methods**: Hexagonal deployment (SNO1), Circular deployment (SNO2)
 **Traditional Methods**: FDN-unaware optimization (SFoU1)
+![image](https://github.com/user-attachments/assets/58999a16-8ab2-45a7-ae2c-e8b1209ae92f)
