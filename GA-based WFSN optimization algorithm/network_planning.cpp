@@ -13,29 +13,23 @@
 typedef struct {
 	int minX, minY, maxX, maxY;
 } RectRegion;
-const int chromosome_size = 100;//ÖÖÈº´óĞ¡
-const int chromosome_length = 6;//È¾É«Ìå³¤¶È£¬Ö÷ÒªÊÇ3¸ö´«¸ĞÆ÷µÄxy×ø±ê
-const int epoch_max = 10;    // ×î´óµü´ú´ÎÊıa
-const double cross_probability = 0.1;   // ½»²æ¸ÅÂÊ
-const double mutation_probability = 0.1;   // ±äÒì¸ÅÂÊ
+const int chromosome_size = 20;//Population size
+const int chromosome_length = 6;//Chromosome length is mainly the xy coordinates of the three sensors
+const int epoch_max = 5;    // Maximum number of iterations
+const double cross_probability = 0.1;   // Cross probability
+const double mutation_probability = 0.1;   // Mutation probability
 void initializeChromosomes(double chromosomes[chromosome_size][chromosome_length]);
 
 double generateRandomCoordinate(double min, double max);
-// È¾É«Ìâ±¾Éí ¶şÎ¬¾ÍÊÇÕâ¸ö½âµÄx£¬y´æ´¢ 
+// The coloring problem itself is two-dimensional, and the x and y of this solution are stored 
 double chromosome[chromosome_size][chromosome_length];
-// È¾É«ÌåÊÊÓ¦¶Èº¯Êı ¶şÎ¬¾ÍÊÇÕâ¸ö½âµÄx£¬y¶ÔÓ¦µÄº¯ÊıµÄÖµµÄ´æ´¢ 
+// The two-dimensional chromosome fitness function is the storage of the values of the functions corresponding to x and y of this solution 
 double chromosome_fitness[chromosome_size];
-// ¸öÌå±»Ñ¡ÖĞµÄ¸ÅÂÊ£¬Õâ¸öÊÇÒÅ´«Ëã·¨µÄÌØÉ«
 double chromosome_chosen[chromosome_size] = { 0 };
-// Ã¿´Îµü´úµÄ×îÓÅ½â
 double epoch_best_fitness[epoch_max];
-// Ã¿´Îµü´úµÄ×îÓÅ½âµÄÎ»ÖÃ£¬ÔÚ¶şÎ¬Àï¾ÍÊÇ¶ÔÓ¦µÄx, y 
 double epoch_best[epoch_max];
-// Ö®Ç°ËùÓĞµü´úµÄ×îÓÅ½âµÄÆ½¾ùÖµ
 double average_epoch_best_fitness[epoch_max];
-// ´æ´¢Ä¿Ç°ËùÓĞµü´úÖĞµÄ×îÓÅ½â
 double all_best_fitness;
-// ´æ´¢Ä¿Ç°ËùÓĞµü´úÖĞµÄ×îÓÅ½â³öÏÖµÄ´úÊı
 int all_best_epoch;
 
 double fitting(WinProp_Result Resultmatrix1, WinProp_Result Resultmatrix2, WinProp_Result Resultmatrix3, double fitness);
@@ -505,8 +499,8 @@ int main(int argc, char** argv)
 			Area.Heights = (double*)malloc(sizeof(double) * NrPredictionHeights);
 			for (int C = 0; C < NrPredictionHeights; C++)
 				Area.Heights[C] = PredictionHeightsMulti[C];
-			Area.LowerLeftX = 0;
-			Area.LowerLeftY = 0;
+			Area.LowerLeftX = -1;
+			Area.LowerLeftY = -1;
 			Area.UpperRightX = 26.5;
 			Area.UpperRightY = 16.5;
 			Area.Resolution = 1.0;
@@ -531,10 +525,10 @@ int main(int argc, char** argv)
 			AntennaPropertiesSet(&Antenna[Count], AntennaX[Count], AntennaY[Count], 2.8, Frequency, AntennaName[Count]);
 			DummyResult = NULL;
 			char initialFilename[200];
-			sprintf(initialFilename, "³õÊ¼»¯Ê±µÄµÚ%d¸öÈ¾É«Ìå£¬%d¸ö´«¸ĞÆ÷·Ö¿ª½á¹û", i, Count);
+			sprintf(initialFilename, "The %d chromosome and %d sensor separation results during initialization", i, Count);
 
 			Error = WinProp_Predict(PredictionHandle, &Antenna[Count], &Area, NULL, NULL, &DummyResult, NULL, NULL, NULL, NULL);
-			//printf("´«¸ĞÆ÷×ø±ê£º(%f, %f)\n" ,AntennaX[Count], AntennaY[Count]);Ã»ÎÊÌâ
+			//printf("Sensor coordinateï¼š(%f, %f)\n" ,AntennaX[Count], AntennaY[Count]);
 			FILE* Outfile = fopen(initialFilename, "w");
 			//if (Outfile)
 			//{
@@ -605,7 +599,7 @@ int main(int argc, char** argv)
 		// -----------------------------------------------------------------------------
 		/* As an example: retrieve max. throughput (kbps) per pixel. */
 		char Nameput[200];
-		sprintf(Nameput, API_DATA_FOLDER "output/³õÊ¼µÚ%d¸öÖÖÈº×ø±ê.txt", i);
+		sprintf(Nameput, API_DATA_FOLDER "output/The initial %d population coordinate.txt", i);
 		FILE* Outfile = fopen(Nameput, "w");
 		if (Outfile)
 			fprintf(Outfile, " (% lf, % lf), (% lf, % lf), (% lf, % lf)", chromosome[i][0], chromosome[i][1], chromosome[i][2], chromosome[i][3], chromosome[i][4], chromosome[i][5]);
@@ -621,7 +615,7 @@ int main(int argc, char** argv)
 		/*if (Error == 0)
 		{
 			char NameForOutput[200];
-			sprintf(NameForOutput, API_DATA_FOLDER "output/³õÊ¼Ê±µÚ%d¸öÖÖÈººÏ²¢½á¹û.txt", i);
+			sprintf(NameForOutput, API_DATA_FOLDER "output/The combined result of the %d th population at the beginning.txt", i);
 			FILE* Outfile = fopen(NameForOutput, "w");
 			if (Outfile)
 			{
@@ -655,11 +649,11 @@ int main(int argc, char** argv)
 		epoch_best[j] = chromosome[(int)best_fitness_index[1]][j];
 	char* Filename = API_DATA_FOLDER "output/Results.txt";
 	FILE* OutputFile = fopen(Filename, "w");
-	//ÒÔÉÏ¾ùÎª³õÊ¼»¯
+	//ä»¥ä¸Šå‡ä¸ºåˆå§‹åŒ–
 
 	for (int a = 0; a < epoch_max; a++)
 	{
-		//¼ÆËãÃ¿¸öÈ¾É«ÌåµÄ¸ÅÂÊ(ÀÛ¼Æ¸ÅÂÊ£©
+		//Calculate the probability of each chromosome (cumulative probability)
 		for (int i = 0; i < chromosome_size; i++)
 		{
 
@@ -668,7 +662,7 @@ int main(int argc, char** argv)
 			else
 				chromosome_chosen[i] = chromosome_fitness[i] / fitness_sum + chromosome_chosen[i - 1];
 		}
-		// Ñ¡ÔñµÄÖ÷Ìå => Ëæ»úÊıÉ¸Ñ¡£¬È¾É«ÌåµÄ¸ÅÂÊÔ½´ó£¬Ô½ÈİÒ×±»selectµ½ 
+		// The selected subject => random number screening. The greater the probability of the chromosome, the easier it is to be selected 
 		int index[chromosome_size];
 		for (int i = 0; i < chromosome_size; i++)
 		{
@@ -687,17 +681,16 @@ int main(int argc, char** argv)
 			}
 		}
 		char middle[200];
-		sprintf(middle, API_DATA_FOLDER "output/111µÚ%d´ú×ø±ê.txt", a);
+		sprintf(middle, API_DATA_FOLDER "output/111th %d generation coordinate.txt", a);
 		FILE* Outfile = fopen(middle, "w");
 		fprintf(Outfile, "fitness_sum=%lf\n", fitness_sum);
 		for (int i = 0; i < chromosome_size; i++)
 		{
-			fprintf(Outfile, "µÚ%dÌõÈ¾É«ÌåµÄÊÊÓ¦¶ÈÎª%lf,µÚ%dÌõÈ¾É«Ìå±»Ñ¡Ôñ¸ÅÂÊÎª%lf\t", i, chromosome_fitness[i], i, chromosome_chosen[i]);
+			fprintf(Outfile, "The fitness of chromosome %d is %lf, and the probability of chromosome %d being selected is %lf\t", i, chromosome_fitness[i], i, chromosome_chosen[i]);
 			for (int j = 0; j < chromosome_length; j++)
 				fprintf(Outfile, "chromosome[%d][%d]=%lf\n", i, j, chromosome[i][j]);
 		}
 		fclose(Outfile);
-		// Ñ¡ÔñÍêÁË£¬ÔÚÕâÀï¼ÇÂ¼
 		for (int i = 0; i < chromosome_size; i++)
 		{
 			for (int j = 0; j < chromosome_length; j++)
@@ -705,7 +698,7 @@ int main(int argc, char** argv)
 			chromosome_fitness[i] = chromosome_fitness[index[i]];
 		}
 		char middle1[200];
-		sprintf(middle1, API_DATA_FOLDER "output/222µÚ%d´ú×ø±ê.txt", a);
+		sprintf(middle1, API_DATA_FOLDER "output/22th %d generation coordinate.txt", a);
 		Outfile = fopen(middle1, "w");
 		for (int i = 0; i < chromosome_size; i++)
 		{
@@ -714,13 +707,10 @@ int main(int argc, char** argv)
 				fprintf(Outfile, "chromosome[%d][%d]=%lf\n", i, j, chromosome[i][j]);
 		}
 		fclose(Outfile);
-		//½»²æ
 		cross(chromosome);
-		//±äÒì
-
 		mutation(chromosome);
-		//¸üĞÂÒ»ÏµÁĞÊı¾İ 
-		// ¼ÆËã²Ù×÷ºóÈ¾É«Ìå¶ÔÓ¦µÄÊÊÓ¦¶È
+		//Update a series of data 
+		// Calculate the fitness corresponding to the chromosomes after the operation
 
 		fitness_sum = 0;
 		for (int i = 0; i < chromosome_size; i++)
@@ -952,10 +942,10 @@ int main(int argc, char** argv)
 				AntennaPropertiesSet(&Antenna[Count], AntennaX[Count], AntennaY[Count], 2.8, Frequency, AntennaName[Count]);
 				DummyResult = NULL;
 				char overFilename[200];
-				sprintf(overFilename, API_DATA_FOLDER "output/µÚ%d¸öÈ¾É«Ìå£¬%d¸ö´«¸ĞÆ÷·Ö¿ª½á¹ûmiddle.txt", i, Count);
+				sprintf(overFilename, API_DATA_FOLDER "output/Calculate the fitness corresponding to the chromosomes after the operation.txt", i, Count);
 
 				Error = WinProp_Predict(PredictionHandle, &Antenna[Count], &Area, NULL, NULL, &DummyResult, NULL, NULL, NULL, NULL);
-				//printf("´«¸ĞÆ÷×ø±ê£º(%f, %f)\n" ,AntennaX[Count], AntennaY[Count]);Ã»ÎÊÌâ
+				//printf("Sensor coordinateï¼š(%f, %f)\n" ,AntennaX[Count], AntennaY[Count]);
 				FILE* Outfile = fopen(overFilename, "w");
 				if (Outfile)
 				{
@@ -1021,7 +1011,7 @@ int main(int argc, char** argv)
 				Error = WinProp_Net_Project_Compute(ProjectHandle, &Callback);
 			}
 			char overNameput[200];
-			sprintf(overNameput, API_DATA_FOLDER "output/µÚ%d´úµÚ%d¸öÖÖÈº×ø±ê.txt", a, i);
+			sprintf(overNameput, API_DATA_FOLDER "output/The coordinate of the %d generation and the %d population.txt", a, i);
 			FILE* Outfile = fopen(overNameput, "w");
 			if (Outfile)
 				fprintf(Outfile, " (% lf, % lf), (% lf, % lf), (% lf, % lf)", chromosome[i][0], chromosome[i][1], chromosome[i][2], chromosome[i][3], chromosome[i][4], chromosome[i][5]);
@@ -1045,7 +1035,7 @@ int main(int argc, char** argv)
 			/*if (Error == 0)
 			{
 				char overNameForOutput[200];
-				sprintf(overNameForOutput, API_DATA_FOLDER "output/µÚ%d´úµÄ%d¸öÖÖÈººÏ²¢½á¹û.txt", a, i);
+				sprintf(overNameForOutput, API_DATA_FOLDER "output/ç¬¬%dä»£çš„%dä¸ªç§ç¾¤åˆå¹¶ç»“æœ.txt", a, i);
 				FILE* Outfile = fopen(overNameForOutput, "w");
 				if (Outfile)
 				{
@@ -1064,9 +1054,7 @@ int main(int argc, char** argv)
 			}*/
 			fitness_sum += chromosome_fitness[i];
 		}
-		// ¼ÆËãÆ½¾ùÖµ
 		average_epoch_best_fitness[a + 1] = fitness_sum / chromosome_size;
-		// ´¢´æ×îÓÅ±íÏÖ 
 		best_fitness_index = max_in_community(chromosome_fitness, chromosome_size);
 		if (best_fitness_index[0] > all_best_fitness)
 		{
@@ -1076,9 +1064,9 @@ int main(int argc, char** argv)
 			all_best_epoch = a + 1;
 		}
 
-		printf("µÚ%d´Îµü´ú£º(%lf,%lf),(%lf,%lf),(%lf,%lf)\t\n", a, chromosome[(int)best_fitness_index[1]][0], chromosome[(int)best_fitness_index[1]][1], chromosome[(int)best_fitness_index[1]][2], chromosome[(int)best_fitness_index[1]][3], chromosome[(int)best_fitness_index[1]][4], chromosome[(int)best_fitness_index[1]][5]);
+		printf("The %d iterationï¼š(%lf,%lf),(%lf,%lf),(%lf,%lf)\t\n", a, chromosome[(int)best_fitness_index[1]][0], chromosome[(int)best_fitness_index[1]][1], chromosome[(int)best_fitness_index[1]][2], chromosome[(int)best_fitness_index[1]][3], chromosome[(int)best_fitness_index[1]][4], chromosome[(int)best_fitness_index[1]][5]);
 		if (OutputFile)
-			fprintf(OutputFile, "µÚ%d´Îµü´ú£º(%lf,%lf),(%lf,%lf),(%lf,%lf)\n", a, chromosome[(int)best_fitness_index[1]][0], chromosome[(int)best_fitness_index[1]][1], chromosome[(int)best_fitness_index[1]][2], chromosome[(int)best_fitness_index[1]][3], chromosome[(int)best_fitness_index[1]][4], chromosome[(int)best_fitness_index[1]][5]);
+			fprintf(OutputFile, "The %d iterationï¼š(%lf,%lf),(%lf,%lf),(%lf,%lf)\n", a, chromosome[(int)best_fitness_index[1]][0], chromosome[(int)best_fitness_index[1]][1], chromosome[(int)best_fitness_index[1]][2], chromosome[(int)best_fitness_index[1]][3], chromosome[(int)best_fitness_index[1]][4], chromosome[(int)best_fitness_index[1]][5]);
 
 	}
 	/* Free propagation results. */
@@ -1162,19 +1150,18 @@ void write_ascii(WinProp_Result Resultmatrix, char* Filename) {
 }
 
 void initializeChromosomes(double chromosomes[chromosome_size][chromosome_length]) {
-	srand(time(0)); // ³õÊ¼»¯Ëæ»úÊıÖÖ×Ó
+	srand(time(0)); 
 	for (int i = 0; i < chromosome_size; i++) {
 		for (int j = 0; j < chromosome_length; j++) {
 			double lower_bound, upper_bound;
-			if (j % 2 == 0) { // Å¼ÊıË÷Òı´ú±íx×ø±ê
+			if (j % 2 == 0) { // Even indexes represent the x-coordinate
 				lower_bound = 0.0;
-				upper_bound = 25;
+				upper_bound = 25.8;
 			}
-			else { // ÆæÊıË÷Òı´ú±íy×ø±ê
+			else { // Odd-numbered indexes represent the y-coordinate
 				lower_bound = 0.0;
-				upper_bound = 15;
+				upper_bound = 16.0;
 			}
-			// Éú³ÉËæ»úÊıµÄ¹¤¾ßº¯Êı
 			chromosomes[i][j] = generateRandomCoordinate(lower_bound, upper_bound);
 		}
 	}
@@ -1201,20 +1188,24 @@ void CarrierPropertiesSet(WinProp_Antenna* Antenna, WinProp_Carrier* Carrier) {
 	Antenna->Carriers.MimoID = Carrier->MimoID;
 }
 
-double fitting(WinProp_Result Resultmatrix1, WinProp_Result Resultmatrix2, WinProp_Result Resultmatrix3, double fitness) {
-	// ¶¨Òå¾ØĞÎÇøÓò  
+double fitting(WinProp_Result Resultmatrix1, WinProp_Result Resultmatrix2, WinProp_Result Resultmatrix3, double fitness) { 
 	RectRegion regions[] = //minX, minY, maxX, maxY
 	{
-		{4.5,0.5,24.5,7.5}// Í¬ÉÏ£¬¸º×ø±êĞèÒªÌØ±ğ×¢Òâ  
-	};
-	int numRegions = sizeof(regions) / sizeof(RectRegion);
+		{-0.5, 16.5, -0.5, 16.5},
+		{25.5, 16.5,25.5, 16.5},  // Note that if negative coordinates are allowed, ensure that Resultmatrix.Matrix can handle negative indexes (which is usually not recommended).  
+		{-0.5, -0.5,-0.5, -0.5},
+		{25.5,-0.5,25.5,-0.5},
+		{0.5,14.5,0.5,14.5},
+		{0.5,7.5,0.5,7.5},
+		{24.5,9.5,24.5,9.5},
 
-	// ±éÀúResultmatrixµÄÃ¿Ò»¸öµã  
+		{4.5,0.5,24.5,7.5}
+	};
+	int numRegions = sizeof(regions) / sizeof(RectRegion);  
 	for (int x = -0.5; x < Resultmatrix1.Columns; x++) {
 		for (int y = -0.5; y < Resultmatrix1.Lines; y++)
 		{
 			int inSpecialRegion = 0;
-			// ¼ì²éµãÊÇ·ñÔÚÈÎºÎÒ»¸öÌØÊâÇøÓòÄÚ  
 			for (int i = 0; i < numRegions; i++)
 			{
 				if (x >= regions[i].minX && x <= regions[i].maxX && y >= regions[i].minY && y <= regions[i].maxY) {
@@ -1236,8 +1227,6 @@ double fitting(WinProp_Result Resultmatrix1, WinProp_Result Resultmatrix2, WinPr
 	return fitness;
 }
 
-
-
 double* max_in_community(double fit[], int size) {
 	static double result[2];
 	result[0] = *fit;
@@ -1252,19 +1241,16 @@ double* max_in_community(double fit[], int size) {
 
 void cross(double chromosome[chromosome_size][chromosome_length])
 {
-	// ÓÃÓÚ¼ÇÂ¼¸¸´úÈ¾É«ÌåµÄÊı×é
 	double parents[chromosome_size][chromosome_length];
 	int num[500];
 	int number = 0;
 	for (int i = 0; i < chromosome_size; i++)
 	{
-		// ÉÏÀ´ÏÈÅĞ¶ÏÊÇ·ñ½øĞĞ½»²æ²Ù×÷£¬´óÓÚ½»²æ¸ÅÂÊ¾ÍÌø¹ı 
 		double pick = ((double)rand()) / RAND_MAX;
 		if (pick > cross_probability)
 		{
 			number++;
 			num[number] = i;
-			// ¼ÇÂ¼ÏÂ¶ÔÓ¦µÄÈ¾É«ÌåÎª¸¸´úÈ¾É«Ìå
 			for (int j = 0; j < chromosome_length; j++)
 			{
 				parents[i][j] = chromosome[i][j];
@@ -1292,52 +1278,40 @@ void cross(double chromosome[chromosome_size][chromosome_length])
 }
 
 
-// ±äÒì 
 void mutation(double chromosomes[chromosome_size][chromosome_length]) {
 	for (int i = 0; i < chromosome_size; i++) {
-		// ÅĞ¶ÏÊÇ·ñ½øĞĞ±äÒì²Ù×÷£¬´óÓÚ±äÒì¸ÅÂÊ¾ÍÌø¹ı
 		double pick = ((double)rand()) / RAND_MAX;
 		if (pick > mutation_probability)
 			continue;
-
-		// Ëæ»ú³éÈ¡È¾É«ÌåµÄÒ»¸öÎ»ÖÃ
 		int where = (int)((chromosome_length - 1) * ((double)rand()) / RAND_MAX);
-
-		// ¸ù¾İ»ùÒòÎ»ÖÃÈ·¶¨ÉÏÏÂÏŞ
 		double lower_bound, upper_bound;
 		if (where % 2 == 0) {
-			// x µÄ·¶Î§
 			lower_bound = 0;
-			upper_bound = 25;
+			upper_bound = 25.8;
 		}
 		else {
-			// y µÄ·¶Î§
 			lower_bound = 0;
-			upper_bound = 15;
+			upper_bound = 16;
 		}
-
-		// ¼ÆËãµ±Ç°»ùÒòÖµµÄÉÏÏŞºÍÏÂÏŞ²î¾à
 		double current_value = chromosomes[i][where];
-		double v1 = upper_bound - current_value;  // ÏòÉÏÏŞ±äÒìµÄÇ±Á¦
-		double v2 = current_value - lower_bound;  // ÏòÏÂÏŞ±äÒìµÄÇ±Á¦
+		double v1 = upper_bound - current_value;  
+		double v2 = current_value - lower_bound;  
 
-		// ¼ÆËã±äÒì·ù¶ÈµÄËæ»úÈ¨ÖØºÍ¶¯Ì¬Òò×Ó
+
 		double r = ((double)rand()) / RAND_MAX;
 		double r1 = ((double)rand()) / RAND_MAX;
 
-		// ¼ÆËã±äÒì·ù¶È
 		double mutation_amount = v1 * r1 * (1 - ((double)i) / epoch_max) * (1 - ((double)i) / epoch_max);
 
-		// Ó¦ÓÃ±äÒì£¬²¢¸ù¾İ·½ÏòºÍ·¶Î§ÏŞÖÆ½øĞĞµ÷Õû
 		if (r >= 0.5) {
-			// Ôö¼Ó»ùÒòÖµ
+
 			if (chromosomes[i][where] + mutation_amount > upper_bound)
 				chromosomes[i][where] = upper_bound;
 			else
 				chromosomes[i][where] += mutation_amount;
 		}
 		else {
-			// ¼õÉÙ»ùÒòÖµ
+
 			if (chromosomes[i][where] + mutation_amount < lower_bound)
 				chromosomes[i][where] = lower_bound;
 			else
