@@ -8,7 +8,7 @@
 # 1 Summary of supplemental materials
 This table below shows all supplemental materials. All sheets in Tables S1, S2, and S3 are arranged in the order shown in this table.
 
-![image](https://github.com/user-attachments/assets/e84d3454-35a0-41a5-93a4-c75420f48de7)
+![image](https://github.com/user-attachments/assets/e0c3088c-bceb-487e-b2a0-093204020fd7)
 
 # 2 General Introduction
 
@@ -26,7 +26,8 @@ The data transformation from BIM’s IFC format to Winprop’s IDA format aims t
 
 This library includes 18 functions to ensure the transformation of object attributes from IFC  to their counterparts in IDA.
 
-![image](https://github.com/user-attachments/assets/00bd878c-e6b5-462a-b24e-26d443af152b)
+![image](https://github.com/user-attachments/assets/a5222e03-a997-41ad-831d-39812c856e4a)
+
 
 ↑↑↑Codes for IFC2IDF function library
 
@@ -35,14 +36,15 @@ This library includes 18 functions to ensure the transformation of object attrib
 The dataset formulation consists of generating WPSs with the grid method and obtaining the energy consumption and natural lighting performance of corresponding WPSs.
 
 This step involves designing the material library, mapping schema between IFC and IDA, and setting the key parameters of the SCM simulation
-![image](https://github.com/user-attachments/assets/000d4379-2f26-4f63-831f-ba1e9eed212f)
+![image](https://github.com/user-attachments/assets/fdbc5d5b-5279-4412-9034-2054bb9c920c)
+
 
 
 ## 3.3 Optimization Results
 
 3.3.1 Optimize WAN placements considering FDNs by GA
 An algorithm based on GA has been devised for WAN placements optimization. The GA-based WAN considering FDNs optimization algorithm is structured into 10 steps. The coordinates of the WAN’s placements are skillfully transformed into a six-gene chromosome to represent a WAN node.
-![image](https://github.com/user-attachments/assets/6e7137ef-af9b-4cd5-ad23-e67e876892d6)
+![image](https://github.com/user-attachments/assets/626efcca-ecf5-4f46-a6a8-cd2590f8c277)
 
 ↑↑↑Codes for NSGA-II-based WPS optimization algorithm
 
