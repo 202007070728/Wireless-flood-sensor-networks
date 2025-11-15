@@ -46,6 +46,7 @@ This step involves designing the material library, mapping schema between IFC an
 A tool for obtaining rainfall data of the simulation scenario through POT calculation
 <img width="1265" height="723" alt="image" src="https://github.com/user-attachments/assets/b96dd3ae-0412-45c0-81b6-961a33b6e1ef" />
 
+
 An algorithm based on GA has been devised for WAN placements optimization. The GA-based WAN considering FDNs optimization algorithm is structured into 10 steps. The coordinates of the WAN’s placements are skillfully transformed into a six-gene chromosome to represent a WAN node.
 ![image](https://github.com/user-attachments/assets/626efcca-ecf5-4f46-a6a8-cd2590f8c277)
 
