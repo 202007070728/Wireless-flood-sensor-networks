@@ -8,8 +8,7 @@
 # 1 Summary of supplemental materials
 This table below shows all supplemental materials. All sheets in Tables S1, S2, and S3 are arranged in the order shown in this table.
 
-<img width="1449" height="1001" alt="image" src="https://github.com/user-attachments/assets/a3cb878b-b697-4dd7-b7cd-d220ab873eaa" />
-
+<img width="1436" height="999" alt="image" src="https://github.com/user-attachments/assets/8dc8e98e-cbb1-48a9-8b3f-0ee1db2d9e4b" />
 
 # 2 General Introduction
 
@@ -44,6 +43,9 @@ This step involves designing the material library, mapping schema between IFC an
 ## 3.3 Optimization Results
 
 3.3.1 Optimize WAN placements considering FDNs by GA
+A tool for obtaining rainfall data of the simulation scenario through POT calculation
+<img width="1265" height="723" alt="image" src="https://github.com/user-attachments/assets/b96dd3ae-0412-45c0-81b6-961a33b6e1ef" />
+
 An algorithm based on GA has been devised for WAN placements optimization. The GA-based WAN considering FDNs optimization algorithm is structured into 10 steps. The coordinates of the WAN’s placements are skillfully transformed into a six-gene chromosome to represent a WAN node.
 ![image](https://github.com/user-attachments/assets/626efcca-ecf5-4f46-a6a8-cd2590f8c277)
 
@@ -55,3 +57,14 @@ An algorithm based on GA has been devised for WAN placements optimization. The G
 **Numerical Optimization Methods**: Hexagonal deployment (SNO1), Circular deployment (SNO2)
 **Traditional Methods**: FDN-unaware optimization (SFoU1)
 ![image](https://github.com/user-attachments/assets/58999a16-8ab2-45a7-ae2c-e8b1209ae92f)
+<img width="1204" height="234" alt="image" src="https://github.com/user-attachments/assets/7180ed37-fa15-4d9b-840e-bfba34ddfa4d" />
+
+# 4 Discussion
+## 4.1 Case of educational facility
+Signal values for the scheme from the Identification-Development-Optimization framework in the educational facility.
+<img width="812" height="707" alt="image" src="https://github.com/user-attachments/assets/7ee8c4b7-93bf-4147-88a8-2e435ed08ba4" />
+
+## 4.2 Capital and O&M cost in WFSN
+The capital and O&M cost of the components of the wireless flood sensor network (WFSN). The O&M cost, including installation, configuration, communication setup, and maintenance, is generally estimated at about 50% of the total investment 
+<img width="1393" height="641" alt="image" src="https://github.com/user-attachments/assets/6275f454-782e-44fa-8013-b0b786b45941" />
+
