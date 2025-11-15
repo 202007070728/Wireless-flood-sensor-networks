@@ -8,7 +8,8 @@
 # 1 Summary of supplemental materials
 This table below shows all supplemental materials. All sheets in Tables S1, S2, and S3 are arranged in the order shown in this table.
 
-![image](https://github.com/user-attachments/assets/e0c3088c-bceb-487e-b2a0-093204020fd7)
+<img width="1449" height="1001" alt="image" src="https://github.com/user-attachments/assets/a3cb878b-b697-4dd7-b7cd-d220ab873eaa" />
+
 
 # 2 General Introduction
 
