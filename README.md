@@ -8,12 +8,13 @@
 # 1 Summary of supplemental materials
 This table below shows all supplemental materials. All sheets in Tables S1, S2, and S3 are arranged in the order shown in this table.
 
-<img width="1434" height="989" alt="image" src="https://github.com/user-attachments/assets/61cce4e8-828d-45d6-bad4-c741f4dca292" />
+<img width="1536" height="1018" alt="image" src="https://github.com/user-attachments/assets/3d9a128f-f31c-40a9-9b16-74b784f089a6" />
 
+<img width="1538" height="639" alt="image" src="https://github.com/user-attachments/assets/b346a61e-3c18-4302-818a-cb41dd14be84" />
 
 # 2 General Introduction
 
-2.1 This repository aims at providing the codes and data regarding the paper entitled “Devising wireless flood-sensing networks for critical infrastructure facilities” for the public, and it is developed by X, X, X, and X.
+2.1 This repository aims at providing the codes and data regarding the paper entitled “Devising wireless flood-sensing networks for critical infrastructure facilities” for the public, and it is developed by Shenghua Zhou,Yaqin Wang, Zhengyi Chen, Dezhi Li, Xiaoyun Du, Xiahou Xiaer, and Yifan Yang.
 
 2.2 We greatly appreciate the selfless spirits of these voluntary contributors of a series of open python libraries, including ifcopenshell (https://github.com/stefkeB/ifcopenshell_examples), pyautocad (https://github.com/reclosedev/pyautocad), and so on. Our work stands on the shoulders of these giants.
 
