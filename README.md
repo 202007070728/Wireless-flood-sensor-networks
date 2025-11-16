@@ -54,12 +54,21 @@ An algorithm based on GA has been devised for WAN placements optimization. The G
 ↑↑↑Codes for NSGA-II-based WPS optimization algorithm
 
 3.3.2 The performance comparison
-7 schemes based on conventional approaches are developed for comparison, including: 
+8 schemes based on conventional approaches are developed for comparison, including: 
 **Expert-based Approaches**: Huawei (SEbM1), Akuvox (SEbM2), Siemens (SEbM3)
 **Numerical Optimization Methods**: Hexagonal deployment (SNO1), Circular deployment (SNO2)
-**Traditional Methods**: FDN-unaware optimization (SFoU1)
+**Traditional Methods**: FDN-unaware optimization (SFoU1) Scheme considering indoor FDNs only (SFoU2)
 ![image](https://github.com/user-attachments/assets/58999a16-8ab2-45a7-ae2c-e8b1209ae92f)
 <img width="1204" height="234" alt="image" src="https://github.com/user-attachments/assets/7180ed37-fa15-4d9b-840e-bfba34ddfa4d" />
+
+Indicator values’ distributions of schemes from expert-based methods (SEbM), numerical optimizations (SNO), and FDN-unaware optimizations (SFuO)
+
+<img width="898" height="517" alt="image" src="https://github.com/user-attachments/assets/0662690c-d0d5-4fae-8c6a-5f328aeecc22" />
+
+<img width="1405" height="557" alt="image" src="https://github.com/user-attachments/assets/a2c4772a-c2b1-48a0-85ac-f19e344fa45b" />
+
+<img width="1396" height="590" alt="image" src="https://github.com/user-attachments/assets/16829465-af65-4b61-a0ae-31b1f60dbbc4" />
+
 
 # 4 Discussion
 ## 4.1 Case of educational facility
