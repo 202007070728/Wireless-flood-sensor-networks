@@ -64,7 +64,8 @@ An algorithm based on GA has been devised for WAN placements optimization. The G
 
 Indicator values’ distributions of schemes from expert-based methods (SEbM), numerical optimizations (SNO), and FDN-unaware optimizations (SFuO)
 
-<img width="898" height="517" alt="image" src="https://github.com/user-attachments/assets/0662690c-d0d5-4fae-8c6a-5f328aeecc22" />
+<img width="1402" height="810" alt="image" src="https://github.com/user-attachments/assets/457e08b7-8a03-4aef-a6a2-aa141b800e4a" />
+
 
 <img width="1405" height="557" alt="image" src="https://github.com/user-attachments/assets/a2c4772a-c2b1-48a0-85ac-f19e344fa45b" />
 
